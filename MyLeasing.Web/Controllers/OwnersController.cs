@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using MyLeasing.Web.Date;
-using MyLeasing.Web.Date.Entities;
+using MyLeasing.Web.Data;
+using MyLeasing.Web.Data.Entities;
 
 namespace MyLeasing.Web.Controllers
 {

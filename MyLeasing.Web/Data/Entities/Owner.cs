@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 
-namespace MyLeasing.Web.Date.Entities
+namespace MyLeasing.Web.Data.Entities
 {
     public class Owner
     {

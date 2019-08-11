@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyLeasing.Web.Data.Entities;
-using MyLeasing.Web.Date.Entities;
 
-namespace MyLeasing.Web.Date
+
+namespace MyLeasing.Web.Data
 {
     public class DataContext : DbContext
     {
