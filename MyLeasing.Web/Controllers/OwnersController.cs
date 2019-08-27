@@ -246,6 +246,7 @@ namespace MyLeasing.Web.Controllers
                 await _dataContext.SaveChangesAsync();
                 return RedirectToAction($"Details/{model.OwnerId}");
             }
+            model.PropertyTypes = _combosHelper.GetComboPropertyTypes();
             return View(model);
         }
         public async Task<IActionResult> EditProperty(int? id)
@@ -378,6 +379,7 @@ namespace MyLeasing.Web.Controllers
                 EndDate = DateTime.Today.AddYears(1)
             };
 
+            model.Lessees = _combosHelper.GetComboLessees();
             return View(model);
         }
         [HttpPost]
