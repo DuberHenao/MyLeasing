@@ -7,6 +7,7 @@ namespace MyLeasing.Prism.ViewModels
 {
     public class LoginPageViewModel : ViewModelBase
     {
+        private readonly INavigationService _navigationService;
         private readonly IApiService _apiService;
         private string _password;
         private bool _isRunning;
@@ -18,6 +19,7 @@ namespace MyLeasing.Prism.ViewModels
         {
             Title = "Login";
             IsEnable = true;
+            _navigationService = navigationService;
             _apiService = apiService;
         }
         public string Email { get; set; }
@@ -55,28 +57,58 @@ namespace MyLeasing.Prism.ViewModels
             IsRunning = true;
             IsEnable = false;
 
+            var url = App.Current.Resources["UrlAPI"].ToString();
+            var connection = await _apiService.CheckConnectionAsync(url);
+            if (!connection)
+            {
+                IsEnable = true;
+                IsRunning = false;
+                await App.Current.MainPage.DisplayAlert("Error", "Check the internet connection.", "Accept");
+                return;
+            }
+
+
             var request = new TokenRequest
             {
                 Password = Password,
                 Username = Email
             };
-            var url = App.Current.Resources["UrlAPI"].ToString();
+            
             var response = await _apiService.GetTokenAsync(url, "Account", "/CreateToken", request);
-
-
-            IsRunning = false;
-            IsEnable = true;
-
+                                 
             if (!response.IsSuccess)
             {
+                IsRunning = false;
+                IsEnable = true;
                 await App.Current.MainPage.DisplayAlert("Error", "User or password incorrect.", "Accept");
                 Password = string.Empty;
                 return;
             }
             var token = response.Result;
+            var response2= await _apiService.GetOwnerByEmailAsync(
+                url,
+                "api",
+                "/Owners/GetOwnerByEmail",
+                "bearer",
+                token.Token,
+                Email);
+                      
+           if (!response2.IsSuccess)
+            {
+                IsRunning = false;
+                IsEnable = true;
+                await App.Current.MainPage.DisplayAlert("Error", "Problem with user data, servicio support.", "Accept");
+                return;
+            }
+            var owner = response2.Result;
+            var parameters = new NavigationParameters
+            {
+                { "owner", owner }
+            };
 
-            await App.Current.MainPage.DisplayAlert("Ok", "You BIENN.", "Accept");
-
+            await _navigationService.NavigateAsync("PropertiesPage", parameters);
+            IsRunning = false;
+            IsEnable = true;
         }
     }
 }
