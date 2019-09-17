@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="MyLeasing.Prism.Views.PropertiesPage"
              Title="{Binding Title}">
@@ -20,10 +21,17 @@
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
-                            <Image
-                                Grid.Column="0"
-                                Source="{Binding FirstImage}"
-                                WidthRequest="130"/>
+                            <ffimageloading:CachedImage
+	                            Grid.Column="0"
+	                            Source="{Binding FirstImage}"
+	                            LoadingPlaceholder= "LoaderImage"
+	                            ErrorPlaceholder= "ErrorImage"
+	                            CacheDuration= "50"
+	                            RetryCount= "3"
+	                            RetryDelay= "600"
+	                            DownsampleToViewSize = "true"
+	                            WidthRequest="100"/>
+                            
                             <Grid
                                 Grid.Column="1">
                                 <Grid.ColumnDefinitions>
@@ -77,10 +85,12 @@
                                     Grid.Row="4"
                                     Grid.Column="0"
                                     FontAttributes="Bold"
-                                    Text="Is Available"/>
+                                    Text="Is Available"
+                                    VerticalOptions="Center"/>
                                 <Switch
                                     Grid.Row="4"
                                     Grid.Column="1"   
+                                    HorizontalOptions="Start"
                                     IsEnabled="False"
                                     IsToggled="{Binding IsAvailable}"/>
                             </Grid>
