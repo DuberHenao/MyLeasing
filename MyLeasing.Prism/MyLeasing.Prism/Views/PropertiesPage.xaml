@@ -21,6 +21,10 @@
                         <Frame
                             CornerRadius="10"
                             Margin="0,0,0,5">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding SelectPropertyCommand}"/>
+                                <!--Este Command tiene que ir en el origen de la lista-->
+                            </Frame.GestureRecognizers>
                             <StackLayout>
                                 <ffimageloading:CachedImage
 	                            Source="{Binding FirstImage}"
