@@ -1,5 +1,7 @@
 ﻿using System;
+using MyLeasing.Common.Helpers;
 using MyLeasing.Common.Models;
+using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Navigation;
 
@@ -18,6 +20,7 @@ namespace MyLeasing.Prism.ViewModels
                
         private async void SelectProperty()
         {
+          
             var parameters = new NavigationParameters
             {
                 { "property", this } //this es el objeto seleccionado
