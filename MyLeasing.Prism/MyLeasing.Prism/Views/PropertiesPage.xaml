@@ -11,10 +11,12 @@
     <!-- ItemsSource Define el origen de datos del list view -->
     <!-- HasUnevenRows permite que una fila tenga diferente tamaño que otra-->
     <StackLayout Padding="10">
-        <ListView
+        <ListView 
+            BackgroundColor="Transparent" 
             HasUnevenRows="True" 
             ItemsSource="{Binding Properties}"
             SeparatorVisibility="None">
+            <!--El BackgroundColor se usa para que surja efecto en IOS-->
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
@@ -27,14 +29,15 @@
                             </Frame.GestureRecognizers>
                             <StackLayout>
                                 <ffimageloading:CachedImage
-	                            Source="{Binding FirstImage}"
+	                            Aspect="AspectFit"
 	                            LoadingPlaceholder= "LoaderImage"
 	                            ErrorPlaceholder= "ErrorImage"
 	                            CacheDuration= "50"
 	                            RetryCount= "3"
 	                            RetryDelay= "600"
 	                            DownsampleToViewSize = "true"
-	                            WidthRequest="300"/>
+                                HeightRequest="200"
+                                Source="{Binding FirstImage}"/>
                             <Grid>
                                 <Grid.ColumnDefinitions>                                    
                                     <ColumnDefinition Width="*"/>
@@ -97,7 +100,7 @@
                                     Grid.Row="4"
                                     Grid.Column="0"
                                     FontAttributes="Bold"
-                                    Text="Is Available"
+                                    Text="Is Available?"
                                     VerticalOptions="Center"/>
                                     <CheckBox
                                     Grid.Row="4"

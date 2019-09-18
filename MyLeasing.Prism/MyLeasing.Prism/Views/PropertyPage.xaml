@@ -10,14 +10,15 @@
             <StackLayout
         Padding="10">
             <ffimageloading:CachedImage
-	        Source="{Binding Property.FirstImage}"
-	        LoadingPlaceholder= "LoaderImage"
-	        ErrorPlaceholder= "ErrorImage"
-	        CacheDuration= "50"
-	        RetryCount= "3"
-	        RetryDelay= "600"
-	        DownsampleToViewSize = "true"
-	        WidthRequest="500"/>
+	            Aspect="AspectFit"
+	            LoadingPlaceholder= "LoaderImage"
+	            ErrorPlaceholder= "ErrorImage"
+	            CacheDuration= "50"
+	            RetryCount= "3"
+	            RetryDelay= "600"
+	            DownsampleToViewSize = "true"
+                HeightRequest="300"
+                Source="{Binding Property.FirstImage}"/>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
@@ -77,7 +78,7 @@
                     Grid.Row="4"
                     Grid.Column="0"
                     FontAttributes="Bold"
-                    Text="Is Available"
+                    Text="Is Available?"
                     VerticalOptions="Center"/>
                 <CheckBox
                     Grid.Row="4"
