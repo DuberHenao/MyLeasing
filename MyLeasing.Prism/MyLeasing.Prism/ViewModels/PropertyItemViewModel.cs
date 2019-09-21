@@ -26,7 +26,7 @@ namespace MyLeasing.Prism.ViewModels
                 { "property", this } //this es el objeto seleccionado
             };
 
-            await _navigationService.NavigateAsync("PropertyPage",parameters);
+            await _navigationService.NavigateAsync("ContractsPage",parameters);
         }
     }
 }
