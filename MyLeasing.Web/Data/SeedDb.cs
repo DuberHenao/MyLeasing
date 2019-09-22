@@ -25,10 +25,12 @@ namespace MyLeasing.Web.Data
             await _context.Database.EnsureCreatedAsync();
             await CheckRoles();
             var manager = await CheckUserAsync("1010", "Juan", "Zuluaga", "jzuluaga55@gmail.com", "350 634 2747", "Calle Luna Calle Sol", "Manager");
+            var manager2 = await CheckUserAsync("3030", "Duber", "Henao", "henaoduber@gmail.com", "312 655 0823", "Calle Luna Calle Sol", "Manager");
             var owner = await CheckUserAsync("2020", "Juan", "Zuluaga", "jzuluaga55@hotmail.com", "350 634 2747", "Calle Luna Calle Sol", "Owner");
-            var lessee = await CheckUserAsync("2020", "Juan", "Zuluaga", "carlos.zuluaga@globant.com", "350 634 2747", "Calle Luna Calle Sol", "Lessee");
+            var lessee = await CheckUserAsync("4040", "Juan", "Zuluaga", "carlos.zuluaga@globant.com", "350 634 2747", "Calle Luna Calle Sol", "Lessee");
             await CheckPropertyTypesAsync();
             await CheckManagerAsync(manager);
+            await CheckManagerAsync(manager2);
             await CheckOwnersAsync(owner);
             await CheckLesseesAsync(lessee);
             await CheckPropertiesAsync();
@@ -96,6 +98,10 @@ namespace MyLeasing.Web.Data
 
                 await _userHelper.AddUserAsync(user, "123456");
                 await _userHelper.AddUserToRoleAsync(user, role);
+
+                var token = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
+                await _userHelper.ConfirmEmailAsync(user, token);
+
             }
 
             return user;
