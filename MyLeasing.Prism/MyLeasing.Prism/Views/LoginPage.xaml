@@ -5,8 +5,15 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="MyLeasing.Prism.Views.LoginPage"
              Title="{Binding Title}">
+    <ScrollView>
+        
+    
     <StackLayout 
         Padding="10">
+        <Image
+            Margin="20"
+            Source="logo.png"
+            WidthRequest="200"/>
         <Label 
             Text="Email"/>
         <Entry
@@ -32,5 +39,6 @@
             Text="Login"
             TextColor="White"/>
     </StackLayout>
+    </ScrollView>
 
 </ContentPage>

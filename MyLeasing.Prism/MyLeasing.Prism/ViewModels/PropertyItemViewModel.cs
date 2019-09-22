@@ -20,13 +20,8 @@ namespace MyLeasing.Prism.ViewModels
                
         private async void SelectProperty()
         {
-          
-            var parameters = new NavigationParameters
-            {
-                { "property", this } //this es el objeto seleccionado
-            };
-
-            await _navigationService.NavigateAsync("ContractsPage",parameters);
+            Settings.Property = JsonConvert.SerializeObject(this);//serializar un objeto a un string
+            await _navigationService.NavigateAsync("PropertyTabbedPage");
         }
     }
 }
