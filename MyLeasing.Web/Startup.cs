@@ -32,6 +32,12 @@ namespace MyLeasing.Web
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Account/NotAuthorized";
+                options.AccessDeniedPath = "/Account/NotAuthorized";
+            });
+
             services.AddIdentity<User, IdentityRole>(cfg =>
             {
                 cfg.User.RequireUniqueEmail = true;
@@ -52,12 +58,12 @@ namespace MyLeasing.Web
                     .AddCookie()
                     .AddJwtBearer(cfg =>
     {
-                        cfg.TokenValidationParameters = new TokenValidationParameters
-                        {
-                             ValidIssuer = Configuration["Tokens:Issuer"],
-                             ValidAudience = Configuration["Tokens:Audience"],
-                             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
-                        };
+        cfg.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidIssuer = Configuration["Tokens:Issuer"],
+            ValidAudience = Configuration["Tokens:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokens:Key"]))
+        };
     });
             services.AddTransient<SeedDb>();
             services.AddScoped<IUserHelper, UserHelper>();
@@ -81,6 +87,7 @@ namespace MyLeasing.Web
                 app.UseHsts();
             }
 
+            app.UseStatusCodePagesWithReExecute("/error/{0}");
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseAuthentication();
