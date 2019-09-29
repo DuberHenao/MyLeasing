@@ -8,6 +8,8 @@ namespace MyLeasing.Common.Helpers
         //Y LUEGO SE HACE LA PROPIEDAD PUBLICA
         private const string _propertyImages = "PropertyImages";
         private const string _property = "property";
+        private const string _token = "token";
+        private const string _owner = "owner";
         private static readonly string _settingsDefault = string.Empty;
 
         private static ISettings AppSettings => CrossSettings.Current;
@@ -21,6 +23,17 @@ namespace MyLeasing.Common.Helpers
         {
             get => AppSettings.GetValueOrDefault(_property, _settingsDefault);
             set => AppSettings.AddOrUpdateValue(_property, value);
+        }
+        public static string Token
+        {
+            get => AppSettings.GetValueOrDefault(_token, _settingsDefault);
+            set => AppSettings.AddOrUpdateValue(_token, value);
+        }
+
+        public static string Owner
+        {
+            get => AppSettings.GetValueOrDefault(_owner, _settingsDefault);
+            set => AppSettings.AddOrUpdateValue(_owner, value);
         }
     }
 }

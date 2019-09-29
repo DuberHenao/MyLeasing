@@ -1,5 +1,8 @@
-﻿using MyLeasing.Common.Models;
+﻿using MyLeasing.Common.Helpers;
+using MyLeasing.Common.Models;
+using Newtonsoft.Json;
 using Prism.Navigation;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -14,6 +17,7 @@ namespace MyLeasing.Prism.ViewModels
         {
             Title = "Properties";
             _navigationService = navigationService;
+            LoadOwner();
         }
         public ObservableCollection<PropertyItemViewModel> Properties
         {
@@ -21,29 +25,27 @@ namespace MyLeasing.Prism.ViewModels
             set => SetProperty(ref _properties, value);
         }
         //recibimos los parametros que manda para ingresar a la pagina Properties.
-        public override void OnNavigatedTo(INavigationParameters parameters)
+
+
+        private void LoadOwner()
         {
-            base.OnNavigatedTo(parameters);
-            if (parameters.ContainsKey("owner"))
+            _owner = JsonConvert.DeserializeObject<OwnerResponse>(Settings.Owner);
+            Title = $"Properties of: {_owner.FullName}";
+            Properties = new ObservableCollection<PropertyItemViewModel>(_owner.Properties.Select(p => new PropertyItemViewModel(_navigationService)
             {
-                _owner = parameters.GetValue<OwnerResponse>("owner");
-                Title = $"Properties of: {_owner.FullName}";
-                Properties = new ObservableCollection<PropertyItemViewModel>(_owner.Properties.Select(p => new PropertyItemViewModel(_navigationService)
-                {
-                    Address = p.Address,
-                    Contracts = p.Contracts,
-                    HasParkingLot = p.HasParkingLot,
-                    Id = p.Id,
-                    Neighborhood = p.Neighborhood,
-                    Price = p.Price,
-                    PropertyImages = p.PropertyImages,
-                    PropertyType = p.PropertyType,
-                    Remarks = p.Remarks,
-                    Rooms = p.Rooms,
-                    SquareMeters = p.SquareMeters,
-                    Stratum = p.Stratum
-                }).ToList());
-            }
+                Address = p.Address,
+                Contracts = p.Contracts,
+                HasParkingLot = p.HasParkingLot,
+                Id = p.Id,
+                Neighborhood = p.Neighborhood,
+                Price = p.Price,
+                PropertyImages = p.PropertyImages,
+                PropertyType = p.PropertyType,
+                Remarks = p.Remarks,
+                Rooms = p.Rooms,
+                SquareMeters = p.SquareMeters,
+                Stratum = p.Stratum
+            }).ToList());
         }
     }
 }
