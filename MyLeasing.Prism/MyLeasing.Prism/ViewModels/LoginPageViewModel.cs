@@ -1,4 +1,5 @@
-﻿using MyLeasing.Common.Helpers;
+﻿using System;
+using MyLeasing.Common.Helpers;
 using MyLeasing.Common.Models;
 using MyLeasing.Common.Services;
 using Newtonsoft.Json;
@@ -14,7 +15,11 @@ namespace MyLeasing.Prism.ViewModels
         private string _password;
         private bool _isRunning;
         private bool _isEnable;
+        private bool _isRemember;
         private DelegateCommand _loginCommand;
+        private DelegateCommand _registerCommand;
+        private DelegateCommand _forgotPasswordCommand;
+        
         public LoginPageViewModel(
             INavigationService navigationService,
             IApiService apiService) : base(navigationService)
@@ -26,9 +31,17 @@ namespace MyLeasing.Prism.ViewModels
             IsRemember = true;
         }
         public string Email { get; set; }
-        public bool IsRemember { get; set; }
+        public bool IsRemember
+        {
+            get => _isRemember;
+            set => SetProperty(ref _isRemember, value);
+        }
 
+        public DelegateCommand ForgotPasswordCommand => _forgotPasswordCommand ?? (_forgotPasswordCommand = new DelegateCommand(ForgotPassword));
+
+        public DelegateCommand RegisterCommand => _registerCommand ?? (_registerCommand = new DelegateCommand(Register));
         public DelegateCommand LoginCommand => _loginCommand ?? (_loginCommand = new DelegateCommand(Login));
+        
 
         public string Password
         {
@@ -107,10 +120,20 @@ namespace MyLeasing.Prism.ViewModels
             var owner = response2.Result;
             Settings.Owner = JsonConvert.SerializeObject(owner);
             Settings.Token = JsonConvert.SerializeObject(token);
+            Settings.IsRemembered = IsRemember;
 
             await _navigationService.NavigateAsync("/LeasingMasterDetailPage/NavigationPage/PropertiesPage");
             IsRunning = false;
             IsEnable = true;
+        }
+        private async void Register()
+        {
+            await _navigationService.NavigateAsync("RegisterPage");
+        }
+
+        private async void ForgotPassword()
+        {
+            await _navigationService.NavigateAsync("RememberPasswordPage");
         }
     }
 }

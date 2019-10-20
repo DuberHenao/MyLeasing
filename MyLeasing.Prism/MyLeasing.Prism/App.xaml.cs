@@ -5,6 +5,10 @@ using MyLeasing.Prism.Views;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using MyLeasing.Common.Services;
+using MyLeasing.Common.Helpers;
+using Newtonsoft.Json;
+using MyLeasing.Common.Models;
+using System;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace MyLeasing.Prism
@@ -22,10 +26,19 @@ namespace MyLeasing.Prism
 
         protected override async void OnInitialized()
         {
-            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MTQ0NDEwQDMxMzcyZTMyMmUzMExYS0RRaVJUdzVGSkUvbUl2a3d1TTczaEI5cXc1LzZzbE9JNGE3R2MyRUk9");
-            InitializeComponent();
-
-            await NavigationService.NavigateAsync("NavigationPage/LoginPage");
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MTU0OTIyQDMxMzcyZTMyMmUzMFR3RzVTejFPMTFkSmg3RTc2K2l3ZlBENkRKeTRlQXFEdmk3MnBLVWtYcUE9");
+            var token = JsonConvert.DeserializeObject<TokenResponse>(Settings.Token);
+            if (Settings.IsRemembered && token?.Expiration > DateTime.Now)
+            {
+                InitializeComponent();
+                await NavigationService.NavigateAsync("/LeasingMasterDetailPage/NavigationPage/PropertiesPage");
+            }
+            else
+            {
+                InitializeComponent();
+                await NavigationService.NavigateAsync("/NavigationPage/LoginPage");
+            }         
+            
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
@@ -41,6 +54,8 @@ namespace MyLeasing.Prism
             containerRegistry.RegisterForNavigation<LeasingMasterDetailPage, LeasingMasterDetailPageViewModel>();
             containerRegistry.RegisterForNavigation<ModifyUserPage, ModifyUserPageViewModel>();
             containerRegistry.RegisterForNavigation<MapPage, MapPageViewModel>();
+            containerRegistry.RegisterForNavigation<RegisterPage, RegisterPageViewModel>();
+            containerRegistry.RegisterForNavigation<RememberPasswordPage, RememberPasswordPageViewModel>();
         }
     }
 }

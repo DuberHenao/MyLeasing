@@ -41,8 +41,7 @@
                 <Label
 	                HorizontalOptions="Center"
 	                FontAttributes="Bold"
-	                Text="Forgot your password?"
-	                TextColor="{StaticResource colorPrimary}">
+	                Text="Forgot your password?">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding ForgotPasswordCommand}"/>
                     </Label.GestureRecognizers>
@@ -72,7 +71,7 @@
                 	Title="Loading..."
                 	VerticalOptions="Center"
                 	ViewBoxWidth="50"
-                	ViewBoxHeight="50" />
+                	ViewBoxHeight="50"/>
         </AbsoluteLayout>
     </ScrollView>
 

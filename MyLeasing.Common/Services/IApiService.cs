@@ -18,5 +18,16 @@ namespace MyLeasing.Common.Services
             string controller, 
             TokenRequest request);
         Task<bool> CheckConnectionAsync(string url);
+        Task<Response<object>> RegisterUserAsync(
+            string urlBase,
+            string servicePrefix,
+            string controller,
+            UserRequest userRequest);
+        Task<Response<object>> RecoverPasswordAsync(
+            string urlBase,
+            string servicePrefix,
+            string controller,
+            EmailRequest emailRequest);
+
     }
 }
