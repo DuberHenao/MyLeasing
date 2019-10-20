@@ -19,12 +19,14 @@ namespace MyLeasing.Prism.ViewModels
             INavigationService navigationService,
             IApiService apiService) : base(navigationService)
         {
-            Title = "Login";
-            IsEnable = true;
             _navigationService = navigationService;
             _apiService = apiService;
+            Title = "Login";
+            IsEnable = true;
+            IsRemember = true;
         }
         public string Email { get; set; }
+        public bool IsRemember { get; set; }
 
         public DelegateCommand LoginCommand => _loginCommand ?? (_loginCommand = new DelegateCommand(Login));
 
